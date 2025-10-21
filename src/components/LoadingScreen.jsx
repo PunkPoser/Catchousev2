@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 const LoadingScreen = ({ onComplete }) => {
-  const [logoVisible, setLogoVisible] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
 
@@ -13,23 +12,19 @@ const LoadingScreen = ({ onComplete }) => {
   ];
 
   useEffect(() => {
-    // Logo animates in first
-    const logoTimer = setTimeout(() => setLogoVisible(true), 300);
-    
-    // Then bubbles animate in one by one
-    const step1 = setTimeout(() => setCurrentStep(1), 1000);
-    const step2 = setTimeout(() => setCurrentStep(2), 1700);
-    const step3 = setTimeout(() => setCurrentStep(3), 2400);
-    const step4 = setTimeout(() => setCurrentStep(4), 3100);
+    // Bubbles animate in one by one
+    const step1 = setTimeout(() => setCurrentStep(1), 500);
+    const step2 = setTimeout(() => setCurrentStep(2), 1200);
+    const step3 = setTimeout(() => setCurrentStep(3), 1900);
+    const step4 = setTimeout(() => setCurrentStep(4), 2600);
     
     // Auto exit after all animations
     const exitTimer = setTimeout(() => {
       setIsExiting(true);
       setTimeout(() => onComplete && onComplete(), 1000);
-    }, 4500);
+    }, 4000);
 
     return () => {
-      clearTimeout(logoTimer);
       clearTimeout(step1);
       clearTimeout(step2);
       clearTimeout(step3);
@@ -42,20 +37,6 @@ const LoadingScreen = ({ onComplete }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-white">
       <div className="relative z-10 max-w-2xl mx-auto px-8 w-full">
         
-        {/* Logo */}
-        <div className={`mb-16 text-center transition-all duration-700 ${
-          isExiting 
-            ? 'opacity-0 scale-90' 
-            : logoVisible 
-            ? 'opacity-100 scale-100' 
-            : 'opacity-0 scale-90'
-        }`}>
-          <div className="flex items-center justify-center">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
-              <span className="text-white font-bold text-lg">C</span>
-            </div>
-          </div>
-        </div>
 
         {/* Speech Bubbles */}
         <div className="space-y-8">

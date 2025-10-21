@@ -16,13 +16,13 @@ const BottomTabs = ({ activeTab, onTabChange }) => {
             <button
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
-              className={`flex-1 mx-0.5 py-2 px-2 rounded-full transition-all duration-200 ${
+              className={`flex-1 mx-0.5 py-2 px-2 rounded-full transition-all duration-200 flex items-center justify-center ${
                 activeTab === tab.id 
                   ? 'bg-primary-500 text-white shadow-soft' 
                   : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
-              <span className="text-xs font-medium">{tab.label}</span>
+              <span className="text-xs font-medium leading-none">{tab.label}</span>
             </button>
           ))}
         </div>
