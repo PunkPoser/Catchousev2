@@ -29,6 +29,25 @@ const PropertyDetail = () => {
     setIsSaved(!isSaved);
   };
 
+  const handleTabChange = (tabId) => {
+    switch (tabId) {
+      case 'discover':
+        navigate('/');
+        break;
+      case 'search':
+        navigate('/search');
+        break;
+      case 'community':
+        navigate('/community');
+        break;
+      case 'saved':
+        navigate('/saved');
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Floating Header */}
@@ -195,7 +214,7 @@ const PropertyDetail = () => {
       </div>
       
       {/* Bottom Navigation */}
-      <BottomTabs activeTab="discover" onTabChange={() => {}} />
+      <BottomTabs activeTab="discover" onTabChange={handleTabChange} />
     </div>
   );
 };
