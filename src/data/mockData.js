@@ -135,7 +135,9 @@ export const communityPosts = [
     },
     comments: 32,
     likes: 86,
-    image: "food_hall.jpg"
+    image: "food_hall.jpg",
+    neighborhoodId: "west-asheville",
+    neighborhoodName: "West Asheville"
   },
   {
     id: 2,
@@ -146,7 +148,9 @@ export const communityPosts = [
     },
     comments: 18,
     likes: 42,
-    image: "farmers_market.jpg"
+    image: "farmers_market.jpg",
+    neighborhoodId: "west-asheville",
+    neighborhoodName: "West Asheville"
   },
   {
     id: 3,
@@ -157,7 +161,9 @@ export const communityPosts = [
     },
     comments: 24,
     likes: 67,
-    image: "coffee_shop.jpg"
+    image: "coffee_shop.jpg",
+    neighborhoodId: "downtown-asheville",
+    neighborhoodName: "Downtown Asheville"
   },
   {
     id: 4,
@@ -168,7 +174,9 @@ export const communityPosts = [
     },
     comments: 15,
     likes: 38,
-    image: "park_sunset.jpg"
+    image: "park_sunset.jpg",
+    neighborhoodId: "west-asheville",
+    neighborhoodName: "West Asheville"
   },
   {
     id: 5,
@@ -179,6 +187,83 @@ export const communityPosts = [
     },
     comments: 29,
     likes: 54,
-    image: "bookstore.jpg"
+    image: "bookstore.jpg",
+    neighborhoodId: "downtown-asheville",
+    neighborhoodName: "Downtown Asheville"
+  }
+];
+
+export const communityEvents = [
+  {
+    id: 1,
+    title: "West Asheville Sunset Social",
+    date: "Thu, Jun 6 · 6:30 PM",
+    location: "Carrier Park Overlook",
+    description: "Weekly picnic with blankets, acoustic sets, and potluck snacks. BYO blanket.",
+    tags: ["Weekly ritual", "Family-friendly"],
+    rsvpCount: 42
+  },
+  {
+    id: 2,
+    title: "River Arts District Night Market",
+    date: "Sat, Jun 8 · 5:00 PM",
+    location: "River Arts District",
+    description: "Local makers, live mural painting, and food trucks along the river.",
+    tags: ["Live music", "Local makers"],
+    rsvpCount: 68
+  }
+];
+
+export const communityGroups = [
+  {
+    id: 1,
+    name: "Montford Morning Walkers",
+    members: 128,
+    meetups: "Tues & Thurs · 7:00 AM",
+    description: "A friendly walking crew that explores a different scenic route each week.",
+    vibe: ["Social", "Outdoors"]
+  },
+  {
+    id: 2,
+    name: "West AVL Pottery Co-op",
+    members: 54,
+    meetups: "Wednesdays · 6:30 PM",
+    description: "Shared kiln time, potluck snacks, and skill swaps for makers at all levels.",
+    vibe: ["Creative", "Hands-on"]
+  },
+  {
+    id: 3,
+    name: "Maya’s Book & Brew Club",
+    members: 87,
+    meetups: "First Sundays · 4:00 PM",
+    description: "Neighborhood readers meet at High Five Coffee to trade stories over lattés.",
+    vibe: ["Cozy", "Discussion"]
+  }
+];
+
+export const neighborhoodRituals = [
+  {
+    id: 1,
+    title: "Friday Night Porch Swaps",
+    neighborhood: "West Asheville",
+    description: "Neighbors bring a favorite snack or story to share on the Maple Street porches.",
+    time: "Fridays · 7:00 PM",
+    host: "Hosted by Maya & Jamie"
+  },
+  {
+    id: 2,
+    title: "Sunrise Flow at Carrier Park",
+    neighborhood: "Downtown Asheville",
+    description: "Gentle yoga on the lawn followed by cold brew at Summit Coffee.",
+    time: "Saturdays · 8:00 AM",
+    host: "Led by the River Arts Wellness Collective"
+  },
+  {
+    id: 3,
+    title: "Sunday Vinyl Brunch",
+    neighborhood: "Montford",
+    description: "Bring a record, sip local roast, and swap neighborhood stories.",
+    time: "Sundays · 10:30 AM",
+    host: "Northside Listening Club"
   }
 ];

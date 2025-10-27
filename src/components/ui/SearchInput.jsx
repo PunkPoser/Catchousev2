@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 const SearchInput = ({ placeholder, value, onChange, onSearch, isTyping = false, onPlaceholderClick, onFocus, onBlur }) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && onSearch) {
@@ -21,12 +20,9 @@ const SearchInput = ({ placeholder, value, onChange, onSearch, isTyping = false,
   };
 
   const handlePlaceholderClick = () => {
-    setIsClicked(true);
     if (onPlaceholderClick) {
       onPlaceholderClick();
     }
-    // Reset click state after animation
-    setTimeout(() => setIsClicked(false), 300);
   };
 
   return (

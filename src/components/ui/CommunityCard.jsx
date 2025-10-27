@@ -14,9 +14,9 @@ const CommunityCard = ({ post, onComment }) => {
   return (
     <div className="bg-white rounded-3xl border border-gray-200 overflow-hidden mb-6">
       {/* Image Section */}
-      <div className="relative">
-        <div className="w-full h-48 bg-gray-200 overflow-hidden">
-          <img 
+      <div className="relative bg-white px-2 pt-2 pb-2">
+        <div className="relative w-full h-48 bg-gray-200 overflow-hidden rounded-2xl">
+          <img
             src={`https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop&auto=format&q=80&ixlib=rb-4.0.3&ixid=${post.id + 100}`}
             alt={`Community post ${post.id}`}
             className="w-full h-full object-cover"

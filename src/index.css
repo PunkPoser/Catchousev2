@@ -4,8 +4,20 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    background: linear-gradient(180deg, #FF3366 0%, #FF3366 100%);
+    min-height: 100%;
+  }
+
   body {
     font-family: 'Inter', system-ui, sans-serif;
+    background: inherit;
+    min-height: 100vh;
+  }
+
+  #root {
+    min-height: 100vh;
+    background: inherit;
   }
 }
 

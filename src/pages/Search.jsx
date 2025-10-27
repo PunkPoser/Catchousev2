@@ -4,7 +4,18 @@ import Button from '../components/ui/Button';
 import SearchInput from '../components/ui/SearchInput';
 import SegmentedTabs from '../components/ui/SegmentedTabs';
 import PropertyCard from '../components/ui/PropertyCard';
-import { properties, featuredMatchPercentages, newListingMatchPercentages } from '../data/mockData';
+import { properties, newListingMatchPercentages, neighborhoods, communityEvents, communityGroups } from '../data/mockData';
+
+const TYPING_SUGGESTIONS = [
+  "houses in asheville",
+  "good schools near gym",
+  "walkable with parks",
+  "safe near restaurants",
+  "family homes under $400k",
+  "great nightlife areas",
+  "quiet with good schools",
+  "downtown lofts"
+];
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -29,25 +40,9 @@ const Search = () => {
     { label: 'Budget $350-450k', value: 'budget' }
   ];
 
-      const typingSuggestions = [
-        "houses in asheville",
-        "good schools near gym",
-        "walkable with parks",
-        "safe near restaurants",
-        "family homes under $400k",
-        "great nightlife areas",
-        "quiet with good schools",
-        "downtown lofts"
-      ];
-
   const handleSearch = (query) => {
     console.log('Searching for:', query);
     // In a real app, this would trigger the search
-  };
-
-  const handleSuggestionClick = (suggestion) => {
-    setSearchQuery(suggestion);
-    handleSearch(suggestion);
   };
 
   const handlePlaceholderClick = () => {
@@ -67,7 +62,7 @@ const Search = () => {
       return;
     }
     
-    const currentSuggestion = typingSuggestions[currentPromptIndex];
+    const currentSuggestion = TYPING_SUGGESTIONS[currentPromptIndex];
     setIsTyping(true);
     setDisplayedText('');
     
@@ -82,7 +77,7 @@ const Search = () => {
         
         // Wait a bit, then move to next suggestion
         setTimeout(() => {
-          setCurrentPromptIndex((prev) => (prev + 1) % typingSuggestions.length);
+          setCurrentPromptIndex((prev) => (prev + 1) % TYPING_SUGGESTIONS.length);
         }, 1500);
       }
     }, 80);
@@ -93,6 +88,70 @@ const Search = () => {
       setDisplayedText('');
     };
   }, [currentPromptIndex, searchQuery, isInputFocused]);
+
+  const areaCards = neighborhoods.map((neighborhood) => {
+    const matchScore = Math.round((neighborhood.walkability + neighborhood.safety + neighborhood.schools) / 3);
+    const highlightEvent = communityEvents.find((event) => event.location.toLowerCase().includes(neighborhood.name.toLowerCase())) || communityEvents[0];
+    const highlightGroup = communityGroups.find((group) => group.name.toLowerCase().includes(neighborhood.name.toLowerCase())) || communityGroups[0];
+
+    return (
+      <Card key={neighborhood.id}>
+        <div className="space-y-4">
+          <div className="flex items-start justify-between">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">{neighborhood.name}</h3>
+              <p className="text-sm text-gray-600">{neighborhood.description}</p>
+            </div>
+            <span className="rounded-full bg-primary-50 text-primary-600 text-sm font-semibold px-3 py-1">
+              {matchScore}% match
+            </span>
+          </div>
+          <div className="grid grid-cols-3 gap-3 text-xs text-gray-600">
+            <div>
+              <p className="font-semibold text-gray-900">Walkability</p>
+              <p>{neighborhood.walkability}/100</p>
+            </div>
+            <div>
+              <p className="font-semibold text-gray-900">Safety</p>
+              <p>{neighborhood.safety}/100</p>
+            </div>
+            <div>
+              <p className="font-semibold text-gray-900">Schools</p>
+              <p>{neighborhood.schools}/100</p>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {neighborhood.tags.map((tag) => (
+              <span key={tag} className="rounded-full bg-gray-100 text-gray-700 text-xs font-medium px-3 py-1">
+                {tag}
+              </span>
+            ))}
+          </div>
+          <div className="rounded-2xl border border-gray-200 bg-gray-50 px-3 py-3 text-xs">
+            <p className="text-gray-500 uppercase font-semibold mb-1">This week</p>
+            <div className="space-y-2">
+              {highlightEvent && (
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-700 font-medium">{highlightEvent.title}</span>
+                  <span className="text-gray-400">{highlightEvent.date}</span>
+                </div>
+              )}
+              {highlightGroup && (
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-700 font-medium">{highlightGroup.name}</span>
+                  <span className="text-gray-400">{highlightGroup.meetups}</span>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <Button size="sm" className="flex-1">View listings</Button>
+            <Button variant="outline" size="sm" className="flex-1">Meet locals</Button>
+          </div>
+        </div>
+      </Card>
+    );
+  });
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -153,13 +212,12 @@ const Search = () => {
 
             {/* Results */}
             <div>
-
               {activeTab === 'listings' ? (
                 <div className="space-y-4">
                   {properties.map((property, index) => (
-                    <PropertyCard 
-                      key={property.id} 
-                      property={property} 
+                    <PropertyCard
+                      key={property.id}
+                      property={property}
                       matchPercentage={newListingMatchPercentages[index]}
                       variant="list"
                     />
@@ -167,68 +225,28 @@ const Search = () => {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {/* Map View for Areas */}
                   <Card className="p-0 overflow-hidden">
-                    <div className="h-64 bg-gray-200 relative flex items-center justify-center">
-                      <div className="text-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 text-gray-400 mx-auto mb-2">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
-                        </svg>
-                        <p className="text-gray-500 text-sm">Interactive Map</p>
-                        <p className="text-gray-400 text-xs mt-1">Areas and neighborhoods</p>
+                    <div className="relative h-64 bg-white p-2">
+                      <div className="relative h-full w-full overflow-hidden rounded-2xl">
+                        <img
+                          src="/Images/google-maps-png-12.png"
+                          alt="Neighborhood map"
+                          className="h-full w-full object-cover"
+                        />
+                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/50 via-transparent to-transparent h-24" />
+                        <div className="absolute left-1/3 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                          <span className="block h-3 w-3 rounded-full bg-primary-500 ring-4 ring-primary-500/30" />
+                        </div>
                       </div>
                     </div>
                   </Card>
 
                   <div className="space-y-4">
-                    <Card>
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <h4 className="font-semibold text-gray-900 mb-2">West Asheville</h4>
-                          <p className="text-gray-600 text-sm mb-3">Vibrant neighborhood with local shops, restaurants, and community feel</p>
-                          <div className="flex flex-wrap gap-2">
-                            <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">Walkable</span>
-                            <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs">Good Schools</span>
-                            <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded-full text-xs">Near Parks</span>
-                          </div>
-                        </div>
-                        <Button size="sm">View</Button>
-                      </div>
-                    </Card>
-
-                    <Card>
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <h4 className="font-semibold text-gray-900 mb-2">Downtown Asheville</h4>
-                          <p className="text-gray-600 text-sm mb-3">Historic downtown with arts scene, restaurants, and nightlife</p>
-                          <div className="flex flex-wrap gap-2">
-                            <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">Walkable</span>
-                            <span className="bg-orange-100 text-orange-700 px-2 py-1 rounded-full text-xs">Nightlife</span>
-                            <span className="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs">Arts Scene</span>
-                          </div>
-                        </div>
-                        <Button size="sm">View</Button>
-                      </div>
-                    </Card>
-
-                    <Card>
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <h4 className="font-semibold text-gray-900 mb-2">North Asheville</h4>
-                          <p className="text-gray-600 text-sm mb-3">Family-friendly area with great schools and parks</p>
-                          <div className="flex flex-wrap gap-2">
-                            <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs">Good Schools</span>
-                            <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">Family-Friendly</span>
-                            <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded-full text-xs">Near Parks</span>
-                          </div>
-                        </div>
-                        <Button size="sm">View</Button>
-                      </div>
-                    </Card>
+                    {areaCards}
                   </div>
                 </div>
               )}
-        </div>
+            </div>
       </div>
     </div>
   );
