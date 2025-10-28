@@ -37,16 +37,16 @@ const CommentModal = ({ isOpen, onClose, post, onSubmitComment }) => {
 
   return (
     <div 
-      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-end justify-center"
+      className="fixed inset-0 bg-black/50 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto"
       onClick={handleBackdropClick}
     >
-      <div className="bg-white rounded-t-3xl w-full max-w-md mx-4 mb-4 transform transition-transform duration-300 ease-out">
+      <div className="bg-white rounded-3xl w-full max-w-md shadow-strong my-auto transform transition-all duration-300 ease-out scale-100">
         {/* Modal Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900">Add a comment</h3>
+        <div className="flex items-center justify-between p-6 border-b border-gray-100">
+          <h3 className="text-xl font-semibold text-gray-900">Add a comment</h3>
           <button 
             onClick={onClose}
-            className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-200 transition-colors"
+            className="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-200 transition-colors"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -55,9 +55,9 @@ const CommentModal = ({ isOpen, onClose, post, onSubmitComment }) => {
         </div>
 
         {/* Post Preview */}
-        <div className="p-4 border-b border-gray-100">
+        <div className="p-6 border-b border-gray-100 bg-gray-50">
           <div className="flex items-center space-x-3 mb-3">
-            <div className="w-8 h-8 rounded-full overflow-hidden">
+            <div className="w-8 h-8 rounded-full overflow-hidden bg-white border border-gray-200">
               <img 
                 src={`https://i.pravatar.cc/40?img=${post.id + 10}`}
                 alt={post.author.name}
@@ -75,9 +75,9 @@ const CommentModal = ({ isOpen, onClose, post, onSubmitComment }) => {
         </div>
 
         {/* Comment Input */}
-        <div className="p-4">
+        <div className="p-6">
           <div className="flex items-start space-x-3">
-            <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+            <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 border border-gray-200">
               <img 
                 src="https://i.pravatar.cc/40?img=blonde"
                 alt="Maya Webb"
@@ -89,7 +89,7 @@ const CommentModal = ({ isOpen, onClose, post, onSubmitComment }) => {
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="Share your thoughts..."
-                className="w-full p-3 border border-gray-200 rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full p-4 border border-gray-200 rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
                 rows={4}
                 maxLength={500}
               />
@@ -101,7 +101,7 @@ const CommentModal = ({ isOpen, onClose, post, onSubmitComment }) => {
         </div>
 
         {/* Action Buttons */}
-        <div className="p-4 pt-0">
+        <div className="p-6 pt-0">
           <div className="flex space-x-3">
             <Button 
               variant="outline" 
