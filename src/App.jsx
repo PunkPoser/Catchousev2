@@ -200,8 +200,8 @@ function App() {
                     marginTop: `-${SHEET_OVERLAP_AT_REST}px`
                   }}
                 >
-                  <div className="relative rounded-t-[24px] overflow-hidden shadow-[0_-24px_50px_-30px_rgba(17,24,39,0.4)]">
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#FF3366]/60 via-transparent to-transparent" />
+                  <div className="relative rounded-t-[24px] overflow-hidden shadow-[0_-24px_50px_-30px_rgba(17,24,39,0.4)] bg-gray-50">
+                    <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#FF3366]/60 via-transparent to-transparent" />
                     <div className="relative bg-gray-50 text-gray-900 pt-6 pb-10">
                       <main className="pb-16">
                         {renderActivePage()}
